@@ -1,19 +1,33 @@
-options:
-  logging: CLOUD_LOGGING_ONLY
-
 steps:
+  # Step 1: Build container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA', '.']
+    args:
+      [
+        'build',
+        '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA',
+        './simple-webapp-mysql'
+      ]
 
+  # Step 2: Push to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA']
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA'
+      ]
 
+  # Step 3: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
-      - 'set'
-      - 'image'
-      - 'deployment/webapp'
-      - 'webapp=us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA'
+      [
+        'set',
+        'image',
+        'deployment/webapp',
+        'webapp=us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA'
+      ]
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-central1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=challenge-gke'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA'
