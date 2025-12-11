@@ -24,7 +24,7 @@ resource "google_container_cluster" "primary" {
     master_ipv4_cidr_block  = "172.16.0.0/28"
   }
 
-  # Try this format instead
+ 
   master_authorized_networks_config {
     cidr_blocks {
       cidr_block   = var.bastion_cidr
