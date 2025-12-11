@@ -1,4 +1,4 @@
-# Terraform sensitive files
+# Terraform state files (never commit)
 terraform.tfstate
 terraform.tfstate.backup
 *.tfstate
@@ -9,14 +9,23 @@ terraform.tfstate.backup
 .terraform.lock.hcl
 .terraform.tfstate.lock.info
 
-# Provider binaries
+# Terraform debug logs
+terraform-debug.log
+
+# Provider binaries (Google, Random, etc.)
 terraform-provider-*
 *.exe
 
-# Local variables
+# Local variable files (private)
 *.tfvars
 *.auto.tfvars
 
-# OS-specific
+# OS/Editor junk files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
+
+# Python or shell scripts cache (if any)
+__pycache__/
+*.log

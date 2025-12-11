@@ -10,7 +10,7 @@ resource "google_container_cluster" "primary" {
   deletion_protection      = false
   networking_mode          = "VPC_NATIVE"
 
-  # Initial node pool (will be removed immediately)
+  
   initial_node_count = 1
 
   ip_allocation_policy {

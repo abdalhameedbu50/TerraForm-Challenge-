@@ -55,17 +55,14 @@ module "cloudsql" {
     google_service_networking_connection.private_vpc_connection
   ]
 
-  # Optional overrides:
-  # instance_name = "mysql-cloudsql"
-  # db_name       = "webapp_db"
-  # db_user       = "appuser"
+  
 }
 
 
 module "gke" {
   source     = "./modules/gke"
   project_id = var.project_id
-  region     = var.region   # OK 
+  region     = var.region   
 
   network = module.vpc.vpc_self_link
   subnet  = module.vpc.restricted_subnet_self_link

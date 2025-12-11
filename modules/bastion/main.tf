@@ -2,9 +2,7 @@
 # Bastion Host – No Public IP, IAP Only SSH
 ##############################################
 
-# ----------------------------------------------------------
-# Get latest Ubuntu 22.04 LTS image (recommended)
-# ----------------------------------------------------------
+
 data "google_compute_image" "bastion_image" {
   family  = "ubuntu-2204-lts"
   project = "ubuntu-os-cloud"
@@ -32,7 +30,7 @@ resource "google_compute_instance" "bastion" {
   # Internal-only NIC — no public IP
   network_interface {
     subnetwork = var.subnet
-    # Omit access_config entirely to disable public IP
+   
   }
 
   # Enable OS Login for secure access
