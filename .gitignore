@@ -1,0 +1,22 @@
+# Terraform sensitive files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+
+# Provider binaries
+terraform-provider-*
+*.exe
+
+# Local variables
+*.tfvars
+*.auto.tfvars
+
+# OS-specific
+.DS_Store
+Thumbs.db
