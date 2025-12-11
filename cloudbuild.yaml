@@ -18,8 +18,7 @@ steps:
       - "us-central1-docker.pkg.dev/mc-abdulhmeed-bk-sandbox1/webapp/webapp:$SHORT_SHA"
 
   # =====================================================
-  # 3. Deploy to GKE (private cluster)
-  #    Uses gke-deploy to apply manifests from kube-files/
+  # 3. Deploy to GKE (private cluster) using kube-files/
   # =====================================================
   - name: gcr.io/cloud-builders/gke-deploy
     args:
@@ -29,16 +28,13 @@ steps:
       - "--location=us-central1"
       - "--cluster=challenge-gke"
 
-# =====================================================
-# Images produced
-# =====================================================
 images:
   - "us-central1-docker.pkg.dev/mc-abdulhmeed-bk-sandbox1/webapp/webapp:$SHORT_SHA"
 
-# =====================================================
-# IMPORTANT: Use the PRIVATE WORKER POOL
-# =====================================================
 options:
+  # Use your PRIVATE worker pool
   pool:
     name: "projects/mc-abdulhmeed-bk-sandbox1/locations/us-central1/workerPools/challenge-build-pool"
-logging: CLOUD_LOGGING_ONLY
+
+  # Satisfy the org/logging requirement for custom service accounts
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
