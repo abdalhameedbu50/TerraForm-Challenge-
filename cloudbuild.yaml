@@ -41,3 +41,4 @@ images:
 options:
   pool:
     name: "projects/mc-abdulhmeed-bk-sandbox1/locations/us-central1/workerPools/challenge-build-pool"
+logging: CLOUD_LOGGING_ONLY
