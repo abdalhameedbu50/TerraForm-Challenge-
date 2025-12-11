@@ -123,4 +123,27 @@ resource "google_compute_global_address" "lb_ip" {
 
 
 
+resource "google_compute_firewall" "cloudbuild_to_gke_master" {
+  name    = "cloudbuild-allow-gke-master"
+  network = google_compute_network.vpc.name
+  project = var.project_id
+
+  direction = "EGRESS"
+  priority  = 1002
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  # Cloud Build Private Worker Pool subnet
+  source_ranges = ["10.0.2.0/24"]
+
+  # GKE private control plane
+  destination_ranges = ["172.16.0.0/28"]
+}
+
+
+
+
 
