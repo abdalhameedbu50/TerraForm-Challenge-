@@ -1,34 +1,19 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
-  
-  - name: "gcr.io/cloud-builders/docker"
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
     args:
-      - "build"
-      - "-t"
-      - "us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA"
-      - "./simple-webapp-mysql"
-
- 
-  - name: "gcr.io/cloud-builders/docker"
-    args:
-      - "push"
-      - "us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA"
-
- 
-  - name: "gcr.io/cloud-builders/gcloud"
-    args:
-      [
-        "container", "clusters", "get-credentials", "challenge-gke",
-        "--region", "us-central1"
-      ]
-
- 
-  - name: "gcr.io/cloud-builders/kubectl"
-    args:
-      [
-        "set", "image", "deployment/webapp",
-        "webapp=us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA"
-      ]
-
-images:
-  - "us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA"
-
+      - 'set'
+      - 'image'
+      - 'deployment/webapp'
+      - 'webapp=us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=challenge-gke'
