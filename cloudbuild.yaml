@@ -1,5 +1,8 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
-  # Step 1: Build container image
+  
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
@@ -8,7 +11,7 @@ steps:
         './simple-webapp-mysql'
       ]
 
-  # Step 2: Push to Artifact Registry
+  
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
@@ -16,7 +19,7 @@ steps:
         'us-central1-docker.pkg.dev/$PROJECT_ID/webapp/webapp:$SHORT_SHA'
       ]
 
-  # Step 3: Deploy to GKE
+
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
       [
