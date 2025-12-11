@@ -73,4 +73,12 @@ module "gke" {
 
 
 
+module "cloudbuild_pool" {
+  source = "./modules/cloudbuild-pool"
+
+  project_id    = var.project_id
+  vpc_network   = "challenge-vpc"  # this is the VPC NAME
+  cloudbuild_sa = "cloudbuild-sa@${var.project_id}.iam.gserviceaccount.com"
+}
+
 
