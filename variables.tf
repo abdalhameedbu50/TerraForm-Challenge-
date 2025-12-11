@@ -10,4 +10,3 @@ variable "bastion_iam_user" {
   description = "User who can SSH into the Bastion via IAP"
   type        = string
 }
-

@@ -142,8 +142,3 @@ resource "google_compute_firewall" "cloudbuild_to_gke_master" {
   # GKE private control plane
   destination_ranges = ["172.16.0.0/28"]
 }
-
-
-
-
-
